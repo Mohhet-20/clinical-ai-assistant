@@ -34,7 +34,7 @@ flowchart LR
 | Results | `/analyze` and `/upload` return possible conditions, model probabilities/signals, clinician-review actions, evidence, extracted entities, and a safety disclaimer. These are not validated personal risk estimates. |
 | React application | `frontend/src`: React, TypeScript, Tailwind, sample cases, file/notes intake, structured model inputs, results, and evidence-backed chat. |
 | Deliverable endpoints | `POST /upload`, `POST /analyze`, `POST /chat`, `GET /health`, `GET /models`, and `GET /evidence`; interactive API docs at `/docs`. |
-| Deployment targets | `render.yaml` defines the Docker API service. Vercel uses `frontend/vercel.json`; set `VITE_API_URL` to the deployed API origin and configure API `CORS_ORIGINS`. No live deployment URLs are claimed here. |
+| Deployment targets | The deployed [Vercel frontend](https://clinical-ai-assistant-nine.vercel.app/) calls the [Render API](https://clarity-clinical-api.onrender.com/). Render health and the hosted UI/API connection were checked on 2026-10-12. |
 
 With no usable OpenAI service, text, machine-readable PDFs, chat, RAG, and model rules work locally. If a configured OpenAI request fails, the agent falls back to rules/retrieved passages. Image-only uploads cannot be interpreted in rules mode and return a clear error; provide notes alongside the image to continue without vision.
 
@@ -174,24 +174,29 @@ Models are small logistic regressions on historical cohorts. They are not extern
 
 ```powershell
 Set-Location backend
+$env:PYTHON_DOTENV_DISABLED = "1"
+$env:PUBMED_LIVE = "false"
 python -m pytest -q
 Set-Location ..\frontend
 npm run build
 ```
 
-The backend tests are designed to run offline; live PubMed and a working OpenAI account are not test prerequisites.
+The environment settings keep tests independent of local secrets and live PubMed. A working OpenAI account is not required; LLM calls fall back to rules mode when unavailable.
 
 ## Deployment
 
 ### Render API
 
-Create a Render Web Service from `render.yaml`; it uses the Dockerfile in `backend/`, listens on Render's `PORT`, and health-checks `/health`. Set `CORS_ORIGINS` to the exact deployed Vercel origin. `OPENAI_API_KEY` is optional. The app uses one Uvicorn worker by default; no external vector database is required.
+The live API is at [https://clarity-clinical-api.onrender.com/](https://clarity-clinical-api.onrender.com/); its [health endpoint](https://clarity-clinical-api.onrender.com/health) and [Swagger docs](https://clarity-clinical-api.onrender.com/docs) are public. The service is configured from `render.yaml`, uses the Dockerfile in `backend/`, listens on Render's `PORT`, and health-checks `/health`. Set `CORS_ORIGINS` to the exact deployed Vercel origin. `OPENAI_API_KEY` is optional. The app uses one Uvicorn worker by default; no external vector database is required.
 
 ### Vercel frontend
 
-Import the repository with `frontend/` as the project root. Set `VITE_API_URL` to the Render API origin (no trailing path), then deploy. Add that Vercel origin to Render's `CORS_ORIGINS` and redeploy the API if changed. `VITE_API_URL` is embedded at frontend build time.
+The live application is [https://clinical-ai-assistant-nine.vercel.app/](https://clinical-ai-assistant-nine.vercel.app/). To reproduce or redeploy it, import the repository with `frontend/` as the project root. Set `VITE_API_URL` to `https://clarity-clinical-api.onrender.com` (no trailing path), then deploy. Add `https://clinical-ai-assistant-nine.vercel.app` to Render's `CORS_ORIGINS` and redeploy the API if changed. `VITE_API_URL` is embedded at frontend build time.
 
 ## Live Demo
 
-- Render API: **[Render URL placeholder]**
-- Vercel app: **[Vercel URL placeholder]**
+- **Frontend:** [Clarity clinical assistant](https://clinical-ai-assistant-nine.vercel.app/)
+- **Backend health:** [Render `/health`](https://clarity-clinical-api.onrender.com/health)
+- **Interactive API docs:** [Render Swagger UI](https://clarity-clinical-api.onrender.com/docs)
+
+Live check on 2026-10-12: the Vercel page loaded and reported the API online; Render `/health` returned HTTP 200 with FAISS, TF-IDF embeddings, 12 evidence documents, and both risk models available. `llm_enabled: true` means a key is configured, not that the provider has usable credit; requests fall back to rules mode when the LLM is unavailable. Live PubMed was enabled in the health response.
