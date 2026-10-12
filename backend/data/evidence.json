@@ -1,0 +1,98 @@
+[
+  {
+    "id": "uspstf-diabetes-screening",
+    "title": "Prediabetes and type 2 diabetes screening",
+    "source": "US Preventive Services Task Force, 2021",
+    "url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-for-prediabetes-and-type-2-diabetes",
+    "text": "The USPSTF recommends screening for prediabetes and type 2 diabetes in nonpregnant adults aged 35 to 70 years who have overweight or obesity. Screening tests include fasting plasma glucose, HbA1c, or oral glucose tolerance testing. The recommendation applies to asymptomatic adults; symptoms require individual clinical evaluation.",
+    "kind": "guideline"
+  },
+  {
+    "id": "cdc-diabetes-symptoms",
+    "title": "Diabetes signs and symptoms",
+    "source": "US Centers for Disease Control and Prevention",
+    "url": "https://www.cdc.gov/diabetes/signs-symptoms/",
+    "text": "Possible diabetes symptoms include frequent urination, increased thirst or hunger, unintended weight loss, fatigue, blurry vision, and other symptoms. Symptoms alone do not establish a diagnosis; testing and clinical evaluation are needed.",
+    "kind": "guideline"
+  },
+  {
+    "id": "aha-heart-attack-warning-signs",
+    "title": "Heart attack warning signs",
+    "source": "American Heart Association",
+    "url": "https://www.heart.org/en/health-topics/heart-attack/warning-signs-of-a-heart-attack",
+    "text": "Warning signs may include chest discomfort, discomfort in other upper-body areas, shortness of breath, cold sweat, nausea, or lightheadedness. The American Heart Association advises calling emergency services when heart attack warning signs occur. Local emergency numbers and protocols vary.",
+    "kind": "guideline"
+  },
+  {
+    "id": "aha-chest-pain-guideline",
+    "title": "Evaluation and diagnosis of chest pain",
+    "source": "American Heart Association / American College of Cardiology, 2021 guideline summary",
+    "url": "https://professional.heart.org/en/science-news/2021-guideline-for-the-evaluation-and-diagnosis-of-chest-pain/top-things-to-know",
+    "text": "The guideline summary describes structured clinical decision pathways for evaluating chest pain in emergency and outpatient settings. Symptoms and risk factors should be interpreted in clinical context; this prototype does not implement those pathways.",
+    "kind": "guideline"
+  },
+  {
+    "id": "medication-reconciliation",
+    "title": "Medication reconciliation prompt",
+    "source": "Prototype workflow note; not a clinical guideline",
+    "url": "",
+    "text": "Confirm prescription medicines, over-the-counter products, supplements, dose, frequency, allergies, and recent changes directly with the patient and clinical record. This is an information-gathering prompt, not treatment advice.",
+    "kind": "guideline"
+  },
+  {
+    "id": "uci-cleveland-data",
+    "title": "Cleveland heart disease dataset documentation",
+    "source": "UCI Machine Learning Repository",
+    "url": "https://archive.ics.uci.edu/dataset/45/heart+disease",
+    "text": "The UCI Heart Disease dataset documents clinical features and a target historically used to distinguish presence from absence of angiographic heart disease. Dataset labels, cohort, and limitations do not make a model's output a calibrated current individual risk estimate.",
+    "kind": "guideline"
+  },
+  {
+    "id": "ada-diabetes-diagnosis",
+    "title": "Diagnostic criteria for diabetes and prediabetes",
+    "source": "American Diabetes Association, Standards of Care in Diabetes",
+    "url": "https://professional.diabetes.org/standards-of-care",
+    "text": "Diabetes may be diagnosed by fasting plasma glucose of at least 126 mg/dL (7.0 mmol/L), 2-hour plasma glucose of at least 200 mg/dL (11.1 mmol/L) during an oral glucose tolerance test, HbA1c of at least 6.5% (48 mmol/mol), or a random plasma glucose of at least 200 mg/dL in a patient with classic symptoms of hyperglycaemia. Without unequivocal hyperglycaemia, diagnosis requires two abnormal test results. Prediabetes is defined by fasting glucose 100-125 mg/dL, 2-hour glucose 140-199 mg/dL, or HbA1c 5.7-6.4%.",
+    "kind": "guideline"
+  },
+  {
+    "id": "acc-aha-hypertension",
+    "title": "Blood pressure categories and hypertension management",
+    "source": "2017 ACC/AHA Guideline for High Blood Pressure in Adults",
+    "url": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000065",
+    "text": "Blood pressure categories: normal below 120/80 mmHg; elevated 120-129 systolic and below 80 diastolic; stage 1 hypertension 130-139 systolic or 80-89 diastolic; stage 2 hypertension at least 140 systolic or at least 90 diastolic; readings above 180 and/or 120 mmHg indicate a hypertensive crisis needing prompt clinical assessment. Diagnosis should rest on the average of two or more careful readings obtained on two or more occasions, with out-of-office confirmation when possible.",
+    "kind": "guideline"
+  },
+  {
+    "id": "who-hypertension",
+    "title": "Hypertension fact sheet",
+    "source": "World Health Organization",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/hypertension",
+    "text": "WHO describes hypertension as a major modifiable risk factor for cardiovascular, cerebral and renal disease. It is commonly diagnosed when systolic pressure is at least 140 mmHg and/or diastolic pressure is at least 90 mmHg on repeated measurements on different days. Lifestyle measures and, where indicated, antihypertensive medicines reduce risk.",
+    "kind": "guideline"
+  },
+  {
+    "id": "acc-aha-primary-prevention",
+    "title": "Primary prevention of cardiovascular disease",
+    "source": "2019 ACC/AHA Guideline on the Primary Prevention of Cardiovascular Disease",
+    "url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000678",
+    "text": "The guideline emphasises team-based care, a heart-healthy lifestyle, estimation of 10-year atherosclerotic cardiovascular disease risk, and shared decision-making about preventive drug therapy such as statins. Low-dose aspirin is not routinely recommended for primary prevention in adults older than 70 or at increased bleeding risk, and may be considered selectively in some adults aged 40-70 at higher cardiovascular risk without increased bleeding risk.",
+    "kind": "guideline"
+  },
+  {
+    "id": "gina-asthma",
+    "title": "Asthma diagnosis",
+    "source": "Global Initiative for Asthma (GINA) report",
+    "url": "https://ginasthma.org/reports/",
+    "text": "Asthma diagnosis is based on a history of variable respiratory symptoms such as wheeze, shortness of breath, chest tightness and cough, together with documented variable expiratory airflow limitation, for example by spirometry with bronchodilator reversibility. Symptoms alone are not sufficient and other causes of breathlessness should be considered.",
+    "kind": "guideline"
+  },
+  {
+    "id": "stroke-warning-signs",
+    "title": "Stroke warning signs (F.A.S.T.)",
+    "source": "American Stroke Association",
+    "url": "https://www.stroke.org/en/about-stroke/stroke-symptoms",
+    "text": "Stroke warning signs include face drooping, arm weakness and speech difficulty. Time to call emergency services is critical when any of these appear, and local emergency numbers vary.",
+    "kind": "guideline"
+  }
+]

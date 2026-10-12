@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: clarity-clinical-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: OPENAI_VISION_MODEL
+        value: gpt-4o-mini
+      - key: PUBMED_LIVE
+        value: "true"
+      - key: CORS_ORIGINS
+        sync: false

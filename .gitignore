@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+dist/
+.env
+*.tsbuildinfo
+
+backend/models/*.joblib
+backend/.pytest_cache/
+.pytest_cache/
