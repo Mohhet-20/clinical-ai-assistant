@@ -249,7 +249,9 @@ def extract_labs(text: str) -> list[dict[str, Any]]:
             value = float(raw.lstrip("<>"))
         except ValueError:
             continue
-        labs.append({"test": name.title() if name.isupper() else name, "value": value, "unit": unit, "reference": ref, "flag": _flag(value, ref)})
+        item = {"test": name.title() if name.isupper() else name, "value": value, "unit": unit, "reference": ref, "flag": _flag(value, ref)}
+        if not any(l["test"].lower() == item["test"].lower() and l["value"] == value for l in labs):   # reports often repeat rows across pages
+            labs.append(item)
     return labs
 
 

@@ -191,3 +191,8 @@ def test_lab_report_parsing_and_boilerplate(client) -> None:
     assert body["vitals"]["age"] == 25 and body["vitals"]["glucose"] == 126 and body["vitals"]["cholesterol"] == 245
     assert body["conditions"] == [] and body["risk_factors"] == []   # no false positives from interpretation text
     assert "Out-of-range labs" in body["summary"]
+
+
+def test_duplicate_lab_rows_are_collapsed() -> None:
+    row = "   GLUCOSE, FASTING (F), PLASMA         142          mg/dL                   70 - 100\n"
+    assert len(nlp.extract_labs(row * 3)) == 1
