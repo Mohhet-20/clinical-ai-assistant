@@ -1,15 +1,41 @@
+@import './theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html { @apply bg-slate-50 text-slate-800 antialiased; }
-  body { @apply font-sans; }
+  html { @apply bg-canvas text-slate-800 antialiased; }
+  body { @apply min-h-screen bg-canvas font-sans; }
+  :focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-canvas; }
+  ::selection { @apply bg-brand-200 text-slate-900; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
 }
+
 @layer components {
-  .card { @apply rounded-2xl border border-slate-200 bg-white shadow-sm; }
+  .card { @apply rounded-2xl border border-slate-200/80 bg-surface shadow-card; }
   .label { @apply font-mono text-[10px] uppercase tracking-wider text-slate-500; }
   .chip { @apply inline-flex items-center rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700 ring-1 ring-inset ring-brand-100; }
-  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-50; }
-  .input { @apply w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-800 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-action px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-secondary { @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-surface px-2.5 py-1.5 text-xs font-medium text-slate-700 transition hover:border-brand-500 hover:text-brand-700 disabled:opacity-50; }
+  .btn-ghost { @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900; }
+  .input { @apply w-full rounded-lg border border-slate-200 bg-surface px-2.5 py-1.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100; }
+  .kbd { @apply rounded border border-slate-300 bg-slate-50 px-1 font-mono text-[10px] text-slate-500; }
+  .skeleton { @apply rounded-md bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 bg-[length:200%_100%] animate-shimmer; }
+  .tab { @apply relative whitespace-nowrap px-3 py-2 text-sm font-medium text-slate-500 transition hover:text-slate-900; }
+  .tab[aria-selected="true"] { @apply text-slate-900 after:absolute after:inset-x-2 after:-bottom-px after:h-0.5 after:rounded-full after:bg-brand-600; }
+}
+
+/* hero backdrop: a quiet grid that fades out, in both themes */
+.hero-grid {
+  background-image: linear-gradient(rgb(var(--slate-200) / .55) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--slate-200) / .55) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 75%);
+}
+
+@media print {
+  html, body { background: white; }
+  .card { border: 0; box-shadow: none; }
+  article, li, section { break-inside: avoid; }
 }
