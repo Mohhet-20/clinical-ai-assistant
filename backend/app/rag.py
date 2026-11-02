@@ -5,6 +5,7 @@ Embeddings: OpenAI `text-embedding-3-small` when OPENAI_API_KEY is set,
 otherwise a local TF-IDF vectoriser, so the whole pipeline runs offline."""
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
@@ -40,6 +41,7 @@ class EvidenceIndex:
         self.docs: list[dict[str, Any]] = []
         self.backend = "faiss" if faiss is not None else "numpy"
         self.embedder = "tfidf"
+        self.corpus_hash = ""
         self._vec: TfidfVectorizer | None = None
         self._index: Any = None
         self._matrix: np.ndarray | None = None
@@ -67,6 +69,7 @@ class EvidenceIndex:
         with self._lock:
             self.docs = self.load_documents()
             texts = [f"{d['title']}. {d['text']}" for d in self.docs]
+            self.corpus_hash = hashlib.sha256(json.dumps([[d["id"], d["text"]] for d in self.docs]).encode()).hexdigest()[:12]
             matrix = None
             if os.getenv("OPENAI_API_KEY") and os.getenv("EMBEDDINGS", "auto") != "tfidf":
                 try:
@@ -101,7 +104,7 @@ class EvidenceIndex:
         k = min(k, len(self.docs))
         if self._index is not None:
             scores, ids = self._index.search(q, k)
-            pairs = list(zip(ids[0].tolist(), scores[0].tolist()))
+            pairs = list(zip(ids[0].tolist(), scores[0].tolist(), strict=True))
         else:
             s = (self._matrix @ q[0])  # type: ignore[operator]
             idx = np.argsort(-s)[:k]
@@ -128,7 +131,11 @@ def _get(url: str, timeout: float = 6.0) -> bytes:
 
 
 def parse_pubmed_xml(xml_bytes: bytes) -> list[dict[str, Any]]:
-    root = ET.fromstring(xml_bytes)
+    # ElementTree never fetches external entities; refusing inline entity declarations also rules out
+    # entity-expansion ("billion laughs") payloads. PubMed's DOCTYPE carries no <!ENTITY> definitions.
+    if b"<!ENTITY" in xml_bytes:
+        raise ValueError("XML entity declarations are not accepted")
+    root = ET.fromstring(xml_bytes)  # noqa: S314 - guarded above; response comes from the fixed NCBI host
     out = []
     for art in root.iter("PubmedArticle"):
         pmid = (art.findtext(".//MedlineCitation/PMID") or "").strip()
