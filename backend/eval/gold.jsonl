@@ -1,0 +1,43 @@
+{"id": "neg-01", "text": "Patient denies chest pain but reports cough for three days.", "present": ["Cough"], "absent": ["Chest pain"], "urgent": false}
+{"id": "neg-02", "text": "No fever, no shortness of breath. Complains of headache.", "present": ["Headache"], "absent": ["Fever", "Shortness of breath"], "urgent": false}
+{"id": "neg-03", "text": "Denies chest pain and shortness of breath. Mild fatigue.", "present": ["Fatigue"], "absent": ["Chest pain", "Shortness of breath"], "urgent": false}
+{"id": "neg-04", "text": "Chest pain resolved after rest. Ongoing palpitations.", "present": ["Palpitations"], "absent": ["Chest pain"], "urgent": false}
+{"id": "neg-05", "text": "Myocardial infarction was ruled out last year. Presents with wheezing and cough.", "present": ["Wheezing", "Cough"], "absent": ["Heart disease"], "urgent": false}
+{"id": "neg-06", "text": "Does not have dizziness. Reports nausea.", "present": ["Nausea"], "absent": ["Dizziness"], "urgent": false}
+{"id": "neg-07", "text": "Family history of diabetes and heart disease. Patient is a smoker.", "present": ["Smoking", "Family history"], "absent": ["Diabetes", "Heart disease"], "urgent": false}
+{"id": "neg-08", "text": "Without edema. Has frequent urination and thirst.", "present": ["Frequent urination", "Increased thirst"], "absent": ["Leg swelling"], "urgent": false}
+{"id": "neg-09", "text": "Negative for syncope. Complains of blurred vision.", "present": ["Blurred vision"], "absent": ["Fainting"], "urgent": false}
+{"id": "neg-10", "text": "No history of hypertension. Takes metformin for diabetes.", "present": ["Metformin", "Diabetes"], "absent": ["Hypertension"], "urgent": false}
+{"id": "dm-01", "text": "52-year-old woman with polyuria and polydipsia. Fasting glucose 168 mg/dL, HbA1c 7.6%, BMI 32.", "present": ["Frequent urination", "Increased thirst"], "absent": [], "urgent": false, "vitals": {"age": 52, "sex": 0, "glucose": 168, "hba1c": 7.6, "bmi": 32.0}, "top_condition": "Diabetes mellitus"}
+{"id": "dm-02", "text": "HbA1c 6.0%, fasting glucose 110 mg/dL. Overweight, sedentary.", "present": ["Sedentary lifestyle"], "absent": [], "urgent": false, "vitals": {"hba1c": 6.0, "glucose": 110}, "top_condition": "Prediabetes"}
+{"id": "dm-03", "text": "Known type 2 diabetes on insulin. Glucose 45 mg/dL, sweating and confusion.", "present": ["Diabetes", "Insulin", "Sweating"], "absent": [], "urgent": true, "vitals": {"glucose": 45}}
+{"id": "dm-04", "text": "Random glucose 520 mg/dL with thirst and frequent urination.", "present": ["Increased thirst", "Frequent urination"], "absent": [], "urgent": true, "vitals": {"glucose": 520}, "top_condition": "Diabetes mellitus"}
+{"id": "dm-05", "text": "Glucose 7.2 mmol/L fasting. No symptoms.", "present": [], "absent": [], "urgent": false, "vitals": {"glucose": 130}}
+{"id": "cv-01", "text": "61 year old male with severe chest pain radiating to the left arm, sweating and nausea. BP 150/95.", "present": ["Chest pain", "Sweating", "Nausea"], "absent": [], "urgent": true, "vitals": {"age": 61, "sex": 1, "systolic": 150, "diastolic": 95}, "top_condition": "Acute coronary syndrome"}
+{"id": "cv-02", "text": "BP 186/124 mmHg with headache. History of hypertension on amlodipine.", "present": ["Headache", "Hypertension", "Amlodipine"], "absent": [], "urgent": true, "vitals": {"systolic": 186, "diastolic": 124}, "top_condition": "Hypertension"}
+{"id": "cv-03", "text": "Leg swelling and shortness of breath on exertion. Known heart failure on furosemide.", "present": ["Leg swelling", "Shortness of breath", "Heart failure", "Furosemide"], "absent": [], "urgent": false, "top_condition": "Heart failure"}
+{"id": "cv-04", "text": "Routine visit. BP 136/86 on two readings. No chest pain.", "present": [], "absent": ["Chest pain"], "urgent": false, "vitals": {"systolic": 136, "diastolic": 86}, "top_condition": "Hypertension"}
+{"id": "cv-05", "text": "Total cholesterol 268 mg/dL on atorvastatin. Hyperlipidemia.", "present": ["Atorvastatin", "Hyperlipidemia"], "absent": [], "urgent": false, "vitals": {"cholesterol": 268}, "top_condition": "Dyslipidaemia"}
+{"id": "cv-06", "text": "Palpitations with HR 142, BP 118/76.", "present": ["Palpitations"], "absent": [], "urgent": true, "vitals": {"heart_rate": 142, "systolic": 118}}
+{"id": "neuro-01", "text": "Sudden slurred speech and facial droop noted by family 30 minutes ago.", "present": [], "absent": [], "urgent": true}
+{"id": "neuro-02", "text": "Witnessed seizure this morning, now drowsy.", "present": [], "absent": [], "urgent": true}
+{"id": "resp-01", "text": "Wheezing and cough, uses salbutamol inhaler. SpO2 97% on room air, RR 16.", "present": ["Wheezing", "Cough", "Salbutamol"], "absent": [], "urgent": false, "vitals": {"spo2": 97, "respiratory_rate": 16}, "top_condition": "Asthma"}
+{"id": "resp-02", "text": "Difficulty breathing, SpO2 85% on room air, RR 34.", "present": ["Shortness of breath"], "absent": [], "urgent": true, "vitals": {"spo2": 85, "respiratory_rate": 34}}
+{"id": "sep-01", "text": "Fever and cough. Temp 39.4 C, HR 118, RR 26, BP 94/58, SpO2 93% on room air. New confusion.", "present": ["Fever", "Cough"], "absent": [], "urgent": true, "vitals": {"temperature": 39.4, "heart_rate": 118, "respiratory_rate": 26, "systolic": 94, "spo2": 93}, "news2": 14}
+{"id": "sep-02", "text": "Temp 37.8 C, HR 96, RR 18, BP 124/80, SpO2 96% on room air, alert.", "present": [], "absent": [], "urgent": false, "vitals": {"temperature": 37.8, "heart_rate": 96, "respiratory_rate": 18, "systolic": 124, "spo2": 96}, "news2": 1}
+{"id": "sep-03", "text": "Temp 36.8 C, HR 72, RR 14, BP 128/78, SpO2 98% on room air, alert and oriented.", "present": [], "absent": [], "urgent": false, "vitals": {"temperature": 36.8, "heart_rate": 72, "respiratory_rate": 14}, "news2": 0}
+{"id": "renal-01", "text": "70 year old female, creatinine 2.1 mg/dL, on metformin 1000 mg twice daily.", "present": ["Metformin"], "absent": [], "urgent": false, "vitals": {"age": 70, "sex": 0, "creatinine": 2.1}, "egfr": 25}
+{"id": "misc-01", "text": "Fatigue, pallor and dizziness for two weeks.", "present": ["Fatigue", "Pallor", "Dizziness"], "absent": [], "urgent": false, "top_condition": "Anaemia"}
+{"id": "misc-02", "text": "Annual review. Feels well. No complaints.", "present": [], "absent": [], "urgent": false}
+{"id": "misc-03", "text": "Numbness and tingling in both feet, known diabetes on glimepiride, HbA1c 8.4%.", "present": ["Numbness / tingling", "Diabetes", "Glimepiride"], "absent": [], "urgent": false, "vitals": {"hba1c": 8.4}, "top_condition": "Diabetes mellitus"}
+{"id": "abbr-01", "text": "Pt c/o SOB and CP since this morning.", "present": ["Shortness of breath", "Chest pain"], "absent": [], "urgent": true}
+{"id": "abbr-02", "text": "No CP. Denies SOB. Mild cough.", "present": ["Cough"], "absent": ["Chest pain", "Shortness of breath"], "urgent": false}
+{"id": "abbr-03", "text": "PMHx: HTN, HLD, T2DM, CAD. On metformin and atorvastatin.", "present": ["Hypertension", "Hyperlipidemia", "Diabetes", "Heart disease", "Metformin", "Atorvastatin"], "absent": [], "urgent": false}
+{"id": "abbr-04", "text": "N/V and diaphoresis with CP radiating to the jaw.", "present": ["Nausea", "Sweating", "Chest pain"], "absent": [], "urgent": true, "top_condition": "Acute coronary syndrome"}
+{"id": "abbr-05", "text": "No DM, no HTN. Wheezing at night.", "present": ["Wheezing"], "absent": ["Diabetes", "Hypertension"], "urgent": false}
+{"id": "fam-01", "text": "Mother has diabetes. Father had MI and HTN. Patient reports fatigue.", "present": ["Family history", "Fatigue"], "absent": ["Diabetes", "Heart disease", "Hypertension"], "urgent": false}
+{"id": "vit-01", "text": "BP: 132 / 84, pulse ox 89%, T 38.5, HR 104.", "present": [], "absent": [], "urgent": true, "vitals": {"systolic": 132, "diastolic": 84, "spo2": 89, "temperature": 38.5, "heart_rate": 104}}
+{"id": "vit-02", "text": "Discussed the CPR policy with family. SOBER living program enrolment. Feels well.", "present": [], "absent": ["Chest pain", "Shortness of breath"], "urgent": false}
+{"id": "sep-04", "text": "Febrile and confused since this morning. T 38.7, HR 118, RR 25, BP 96/58, SpO2 94% on room air.", "present": ["Fever", "Confusion"], "absent": [], "urgent": true, "top_condition": "Sepsis"}
+{"id": "renal-02", "text": "82 year old woman, creatinine 2.4 mg/dL, taking metformin 500 mg twice daily.", "present": ["Metformin"], "absent": [], "urgent": false, "vitals": {"creatinine": 2.4}, "top_condition": "Kidney impairment"}
+{"id": "neg-11", "text": "Not confused. Alert and oriented. Mild cough, no fever.", "present": ["Cough"], "absent": ["Confusion", "Fever"], "urgent": false}
