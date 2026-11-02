@@ -9,3 +9,11 @@ dist/
 backend/models/*.joblib
 backend/.pytest_cache/
 .pytest_cache/
+backend/models/*.sha256
+backend/logs/
+.coverage
+.ruff_cache/
+
+# Playwright
+test-results/
+playwright-report/

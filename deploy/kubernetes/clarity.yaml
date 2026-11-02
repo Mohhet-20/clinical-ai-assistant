@@ -1,0 +1,168 @@
+# Clarity on Kubernetes. Apply with:  kubectl apply -f deploy/kubernetes/clarity.yaml
+# Create the secret first (never commit real values):
+#   kubectl -n clarity create secret generic clarity-secrets \
+#     --from-literal=OIDC_ISSUER=https://login.example.org/realms/hospital \
+#     --from-literal=OIDC_AUDIENCE=clarity-api --from-literal=OIDC_CLIENT_ID=clarity-spa \
+#     --from-literal=ADMIN_API_KEYS=<random> \
+#     --from-literal=CASE_ENCRYPTION_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
+# Replace the image references and the hostnames below.
+#
+# Notes: the API runs as ONE replica because the audit chain head, rate limiter and SQLite case store are
+# per-process/per-volume. Scale out only after moving them to shared services (see docs/SAFETY_CASE.md).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: clarity
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: clarity-config, namespace: clarity}
+data:
+  ENVIRONMENT: production
+  CORS_ORIGINS: https://clarity.example.org
+  PUBMED_LIVE: "true"
+  RATE_LIMIT_PER_MINUTE: "60"
+  CASE_STORE: "true"
+  CASE_RETENTION_DAYS: "30"
+  AUDIT_LOG_PATH: /app/logs/audit.jsonl
+  CASE_DB_PATH: /app/logs/cases.db
+  DOCS_ENABLED: "false"
+  TRUSTED_PROXY_HOPS: "1"          # ingress-nginx appends the client address
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: clarity-data, namespace: clarity}
+spec:
+  accessModes: [ReadWriteOnce]
+  resources: {requests: {storage: 5Gi}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: clarity-api, namespace: clarity, labels: {app: clarity-api}}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}          # RWO volume + single writer for the audit chain
+  selector: {matchLabels: {app: clarity-api}}
+  template:
+    metadata: {labels: {app: clarity-api}}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, fsGroup: 10001, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: api
+          image: ghcr.io/your-org/clarity-api:2.1.0
+          ports: [{containerPort: 8000, name: http}]
+          envFrom:
+            - configMapRef: {name: clarity-config}
+            - secretRef: {name: clarity-secrets}
+          resources:
+            requests: {cpu: 250m, memory: 512Mi}
+            limits: {cpu: "1", memory: 1Gi}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          startupProbe: {httpGet: {path: /v1/ready, port: http}, periodSeconds: 5, failureThreshold: 30}
+          readinessProbe: {httpGet: {path: /v1/ready, port: http}, periodSeconds: 10}
+          livenessProbe: {httpGet: {path: /v1/health, port: http}, periodSeconds: 20, failureThreshold: 3}
+          volumeMounts:
+            - {name: data, mountPath: /app/logs}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - {name: data, persistentVolumeClaim: {claimName: clarity-data}}
+        - {name: tmp, emptyDir: {}}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: clarity-api, namespace: clarity}
+spec:
+  selector: {app: clarity-api}
+  ports: [{port: 80, targetPort: http, name: http}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: clarity-ui, namespace: clarity, labels: {app: clarity-ui}}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: clarity-ui}}
+  template:
+    metadata: {labels: {app: clarity-ui}}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 101, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: ui
+          image: ghcr.io/your-org/clarity-ui:2.1.0   # built with VITE_API_URL=https://clarity-api.example.org
+          env:
+            - {name: API_ORIGIN, value: https://clarity-api.example.org}
+            - {name: IDP_ORIGIN, value: https://login.example.org}
+          ports: [{containerPort: 8080, name: http}]
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 250m, memory: 128Mi}
+          securityContext: {allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}
+          readinessProbe: {httpGet: {path: /healthz, port: http}}
+          livenessProbe: {httpGet: {path: /healthz, port: http}}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: clarity-ui, namespace: clarity}
+spec:
+  selector: {app: clarity-ui}
+  ports: [{port: 80, targetPort: http, name: http}]
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata: {name: clarity-ui, namespace: clarity}
+spec:
+  minAvailable: 1
+  selector: {matchLabels: {app: clarity-ui}}
+---
+# Default-deny, then allow only what each tier needs.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: default-deny, namespace: clarity}
+spec:
+  podSelector: {}
+  policyTypes: [Ingress, Egress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: api-traffic, namespace: clarity}
+spec:
+  podSelector: {matchLabels: {app: clarity-api}}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from: [{namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: ingress-nginx}}}]
+      ports: [{port: 8000}]
+  egress:
+    - to: [{namespaceSelector: {}, podSelector: {matchLabels: {k8s-app: kube-dns}}}]
+      ports: [{port: 53, protocol: UDP}, {port: 53, protocol: TCP}]
+    - ports: [{port: 443, protocol: TCP}]   # IdP JWKS, NCBI PubMed, optional LLM provider - narrow with an egress gateway
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: ui-traffic, namespace: clarity}
+spec:
+  podSelector: {matchLabels: {app: clarity-ui}}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from: [{namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: ingress-nginx}}}]
+      ports: [{port: 8080}]
+  egress: []
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clarity
+  namespace: clarity
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/proxy-body-size: 13m
+spec:
+  ingressClassName: nginx
+  tls: [{hosts: [clarity.example.org, clarity-api.example.org], secretName: clarity-tls}]
+  rules:
+    - host: clarity.example.org
+      http: {paths: [{path: /, pathType: Prefix, backend: {service: {name: clarity-ui, port: {name: http}}}}]}
+    - host: clarity-api.example.org
+      http: {paths: [{path: /, pathType: Prefix, backend: {service: {name: clarity-api, port: {name: http}}}}]}

@@ -4,7 +4,7 @@ services:
     runtime: docker
     rootDir: backend
     plan: free
-    healthCheckPath: /health
+    healthCheckPath: /v1/ready
     envVars:
       - key: OPENAI_API_KEY
         sync: false
@@ -16,3 +16,15 @@ services:
         value: "true"
       - key: CORS_ORIGINS
         sync: false
+      # Comma-separated clinician / admin API keys. Leave unset only for the public synthetic-data demo;
+      # set ENVIRONMENT=production together with keys for any real deployment (startup fails closed without them).
+      - key: API_KEYS
+        sync: false
+      - key: ADMIN_API_KEYS
+        sync: false
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "60"
+      # Render's proxy appends the real client address to X-Forwarded-For; count one hop from the right
+      # (never trust the whole header - clients can send their own).
+      - key: TRUSTED_PROXY_HOPS
+        value: "1"
