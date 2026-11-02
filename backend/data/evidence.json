@@ -94,5 +94,37 @@
     "url": "https://www.stroke.org/en/about-stroke/stroke-symptoms",
     "text": "Stroke warning signs include face drooping, arm weakness and speech difficulty. Time to call emergency services is critical when any of these appear, and local emergency numbers vary.",
     "kind": "guideline"
+  },
+  {
+    "id": "rcp-news2",
+    "title": "National Early Warning Score 2 (NEWS2)",
+    "source": "Royal College of Physicians, 2017",
+    "url": "https://www.rcp.ac.uk/improving-care/resources/national-early-warning-score-news-2/",
+    "text": "NEWS2 aggregates scores for respiratory rate, oxygen saturation, supplemental oxygen, systolic blood pressure, pulse rate, level of consciousness or new confusion, and temperature. An aggregate score of 5 or 6, or a score of 3 in any single parameter, should prompt urgent review by a clinician competent in assessing acutely ill patients. A score of 7 or more is the threshold for an emergency response, including assessment by a team with critical-care competencies.",
+    "kind": "guideline"
+  },
+  {
+    "id": "sepsis-3-qsofa",
+    "title": "Sepsis-3 definitions and the qSOFA score",
+    "source": "Singer et al., JAMA 2016;315(8):801-810",
+    "url": "https://jamanetwork.com/journals/jama/fullarticle/2492881",
+    "text": "Sepsis is defined as life-threatening organ dysfunction caused by a dysregulated host response to infection. In adults with suspected infection, quick SOFA (qSOFA) criteria of respiratory rate of 22/min or greater, altered mentation, and systolic blood pressure of 100 mmHg or less identify patients more likely to have poor outcomes when two or more criteria are met. qSOFA is a prompt for further assessment, not a stand-alone diagnostic test for sepsis.",
+    "kind": "guideline"
+  },
+  {
+    "id": "ckd-epi-2021",
+    "title": "CKD-EPI 2021 race-free creatinine equation for eGFR",
+    "source": "Inker et al., N Engl J Med 2021;385:1737-1749",
+    "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2102953",
+    "text": "The 2021 CKD-EPI creatinine equation estimates glomerular filtration rate without a race coefficient, using serum creatinine, age, and sex. Chronic kidney disease is classified by GFR category (G1 90 or more, G2 60-89, G3a 45-59, G3b 30-44, G4 15-29, G5 below 15 mL/min/1.73m2) together with albuminuria, and requires abnormalities persisting for more than three months.",
+    "kind": "guideline"
+  },
+  {
+    "id": "fda-metformin-renal",
+    "title": "Metformin use in patients with reduced kidney function",
+    "source": "US Food and Drug Administration, Drug Safety Communication, 2016",
+    "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-fda-revises-warnings-regarding-use-diabetes-medicine-metformin-certain",
+    "text": "FDA revised metformin labelling to base kidney-function decisions on eGFR rather than serum creatinine. Metformin is contraindicated in patients with an eGFR below 30 mL/min/1.73m2. Starting metformin is not recommended when eGFR is between 30 and 45, and for patients already taking it whose eGFR falls below 45 the benefits and risks of continuing should be assessed. Kidney function should be assessed before starting and at least annually.",
+    "kind": "guideline"
   }
 ]
