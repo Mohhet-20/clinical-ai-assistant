@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 
 from app import main, ml, nlp, rag
 
+PNG = b"\x89PNG\r\n\x1a\n" + bytes(32)
 HEART = {"age": 55, "sex": 1, "cp": 2, "trestbps": 130, "chol": 240, "fbs": 0, "restecg": 0, "thalach": 150, "exang": 0, "oldpeak": 1.0, "slope": 2, "ca": 0, "thal": 3}
 
 
@@ -117,15 +118,15 @@ def test_pdf_upload_extracts_text(client) -> None:
 
 
 def test_image_without_key_requires_notes(client) -> None:
-    assert client.post("/upload", files={"file": ("x.png", b"img", "image/png")}).status_code == 503
-    r = client.post("/upload", files={"file": ("x.png", b"img", "image/png")}, data={"notes": "Cough and wheezing for a week."})
+    assert client.post("/upload", files={"file": ("x.png", PNG, "image/png")}).status_code == 503
+    r = client.post("/upload", files={"file": ("x.png", PNG, "image/png")}, data={"notes": "Cough and wheezing for a week."})
     assert r.status_code == 200 and r.json()["input_modality"] == "image" and r.json()["image_note"]
 
 
 def test_image_service_failure_falls_back_to_notes(client, monkeypatch) -> None:
     monkeypatch.setattr(main.agent, "llm_client", lambda: object())
     monkeypatch.setattr(main, "image_to_text", lambda *_: (_ for _ in ()).throw(RuntimeError("provider error")))
-    r = client.post("/upload", files={"file": ("x.png", b"img", "image/png")}, data={"notes": "Cough and wheezing for a week."})
+    r = client.post("/upload", files={"file": ("x.png", PNG, "image/png")}, data={"notes": "Cough and wheezing for a week."})
     assert r.status_code == 200 and r.json()["image_note"]
     assert "Cough" in r.json()["symptoms"] and "provider error" not in r.text
 

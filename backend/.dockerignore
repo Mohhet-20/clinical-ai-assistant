@@ -2,3 +2,10 @@
 __pycache__
 *.py[cod]
 .env
+.pytest_cache
+.ruff_cache
+.coverage
+logs
+models/*.joblib
+models/*.sha256
+tests

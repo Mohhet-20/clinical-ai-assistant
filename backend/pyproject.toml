@@ -1,0 +1,32 @@
+[project]
+name = "clarity-clinical-api"
+version = "2.1.0"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::UserWarning:sklearn.*", "ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 200
+target-version = "py310"
+extend-exclude = ["data", "models"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "S", "UP", "BLE"]
+ignore = [
+    "E731",   # small lambdas are used deliberately in rule tables
+    "S101",   # assert is fine in tests and internal invariants
+    "S310",   # urllib is only used against the fixed NCBI host
+    "S311",   # no cryptographic use of random
+    "B008",   # FastAPI Depends()/File() defaults
+    "BLE001", # broad excepts are the graceful-degradation boundary (LLM/PubMed/vision fall back to rules mode)
+    "E501",   # long prompt strings and rule tables are kept on one line
+    "E741",   # `l` is the conventional name for a lab row here
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106", "B017"]
+
+[tool.coverage.run]
+source = ["app"]
