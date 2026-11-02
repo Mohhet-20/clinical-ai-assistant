@@ -1,0 +1,30 @@
+[
+  {
+    "id": "sepsis",
+    "name": "Deteriorating patient",
+    "blurb": "Fever, confusion, abnormal vitals: NEWS2, qSOFA, eGFR",
+    "text": "78-year-old woman from a care home with new confusion since this morning. Fever and productive cough for 2 days. T 38.9, HR 124, RR 28, BP 92/54, SpO2 90% on 2L nasal cannula. Creatinine 2.0 mg/dL. On metformin 1000 mg twice daily and lisinopril 20 mg daily. Allergic to penicillin. Denies chest pain.",
+    "features": {}
+  },
+  {
+    "id": "ed-shorthand",
+    "name": "Shorthand ED note",
+    "blurb": "Abbreviations, negation, family history",
+    "text": "58-year-old man c/o CP and SOB x2h, diaphoretic, N/V. PMHx: HTN, T2DM, HLD. Mother had MI. Denies fever. BP 172/104, HR 112, SpO2 95% on room air, T 37.1, alert. On ASA and metformin 500 mg BD.",
+    "features": {}
+  },
+  {
+    "id": "diabetes",
+    "name": "Possible diabetes",
+    "blurb": "Labs and vitals feed the risk model",
+    "text": "Female, 45-year-old. Reports increased thirst, frequent urination and fatigue for 3 weeks, with blurred vision. BMI 33. Fasting glucose 182 mg/dL, HbA1c 8.1%. BP 128/84 mmHg. Family history of diabetes. Not currently on any treatment.",
+    "features": { "DiabetesPedigreeFunction": "0.55", "Pregnancies": "2" }
+  },
+  {
+    "id": "cardiac",
+    "name": "Chest pain, full workup",
+    "blurb": "All 13 UCI fields run the heart model",
+    "text": "62-year-old male smoker with hypertension, taking lisinopril and aspirin. Presents with chest pressure radiating to the left arm, shortness of breath and sweating since this morning. BP 168/98 mmHg. Total cholesterol 262 mg/dL.",
+    "features": { "age": "62", "sex": "1", "cp": "4", "trestbps": "168", "chol": "262", "fbs": "0", "restecg": "2", "thalach": "112", "exang": "1", "oldpeak": "2.4", "slope": "2", "ca": "2", "thal": "7" }
+  }
+]
