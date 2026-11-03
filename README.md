@@ -179,4 +179,4 @@ Don't put real patient data into it. The steps that would be needed before any c
 
 ---
 
-Built by [Mohhet-20](https://github.com/Mohhet-20). Questions and issues are welcome.
+Built by [Mohhet-20](https://github.com/Mohhet-20). Questions and issues are welcome. Licensed under the [MIT License](LICENSE).
