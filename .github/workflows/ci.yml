@@ -124,7 +124,7 @@ jobs:
           ignore-unfixed: true
           exit-code: "1"
       - name: Software bill of materials (CycloneDX)
-        uses: anchore/sbom-action@v0.17.8
+        uses: anchore/sbom-action@v0.24.3
         with:
           image: clarity-api:ci
           format: cyclonedx-json
