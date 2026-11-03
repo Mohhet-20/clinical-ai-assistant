@@ -7,7 +7,7 @@ ARG VITE_API_URL=http://localhost:8000
 ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
-FROM nginxinc/nginx-unprivileged:1.27-alpine
+FROM nginxinc/nginx-unprivileged:1.31-alpine
 # The official image renders /etc/nginx/templates/*.template with envsubst (only defined variables, so $uri is untouched).
 ARG VITE_API_URL=http://localhost:8000
 # IDP_ORIGIN: the SSO provider's origin (e.g. https://login.microsoftonline.com) so the PKCE token exchange is allowed by CSP.
