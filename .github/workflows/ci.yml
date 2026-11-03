@@ -22,7 +22,7 @@ jobs:
       PYTHON_DOTENV_DISABLED: "1"
       PUBMED_LIVE: "false"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -49,7 +49,7 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend, frontend]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -100,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [backend, frontend, e2e]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Build API image (trains and hashes models)
         run: docker build -t clarity-api:ci ./backend
       - name: Smoke-test API container
