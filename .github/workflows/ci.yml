@@ -117,7 +117,7 @@ jobs:
           for i in $(seq 1 15); do curl -fsS http://localhost:8080/healthz && break; sleep 1; done
           curl -fsSI http://localhost:8080/ | grep -qi "content-security-policy"
       - name: Scan images for vulnerabilities (fail on fixable critical/high)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: clarity-api:ci
           severity: CRITICAL,HIGH
