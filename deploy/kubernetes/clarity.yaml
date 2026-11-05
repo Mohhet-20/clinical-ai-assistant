@@ -52,7 +52,7 @@ spec:
       securityContext: {runAsNonRoot: true, runAsUser: 10001, fsGroup: 10001, seccompProfile: {type: RuntimeDefault}}
       containers:
         - name: api
-          image: ghcr.io/your-org/clarity-api:2.1.0
+          image: ghcr.io/mohhet-20/clarity-api:2.1.0
           ports: [{containerPort: 8000, name: http}]
           envFrom:
             - configMapRef: {name: clarity-config}
@@ -91,7 +91,7 @@ spec:
       securityContext: {runAsNonRoot: true, runAsUser: 101, seccompProfile: {type: RuntimeDefault}}
       containers:
         - name: ui
-          image: ghcr.io/your-org/clarity-ui:2.1.0   # built with VITE_API_URL=https://clarity-api.example.org
+          image: ghcr.io/mohhet-20/clarity-ui:2.1.0   # built with VITE_API_URL=https://clarity-api.example.org
           env:
             - {name: API_ORIGIN, value: https://clarity-api.example.org}
             - {name: IDP_ORIGIN, value: https://login.example.org}
