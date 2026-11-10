@@ -7,6 +7,8 @@ test.beforeEach(async ({ page }) => {
 
 /** WCAG 2.1 A/AA checks. Fails on serious or critical violations. */
 async function expectAccessible(page: Page, label: string) {
+  // measure settled colours: let any fade-in finish before axe samples contrast
+  await page.waitForFunction(() => document.getAnimations().every(a => a.playState !== 'running'))
   const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
   const blocking = violations.filter(v => v.impact === 'serious' || v.impact === 'critical')
   expect(blocking.map(v => `${v.id}: ${v.help} (${v.nodes.length}) e.g. ${v.nodes[0]?.target} - ${v.nodes[0]?.any[0]?.message ?? ''}`), label).toEqual([])
